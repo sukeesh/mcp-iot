@@ -19,7 +19,7 @@ func NewIotMcpServer() *IotMcpServer {
 	return &IotMcpServer{}
 }
 
-func (i *IotMcpServer) FetchTemperature() server.ToolHandlerFunc {
+func (i *IotMcpServer) ReadSerialLine() server.ToolHandlerFunc {
 	return func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		mode := &serial.Mode{
 			BaudRate: 9600,
@@ -39,5 +39,15 @@ func (i *IotMcpServer) FetchTemperature() server.ToolHandlerFunc {
 
 		line = strings.TrimSpace(line)
 		return mcp.NewToolResultText(line), nil
+	}
+}
+
+func (i *IotMcpServer) GetPortList() server.ToolHandlerFunc {
+	return func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		ports, err := serial.GetPortsList()
+		if err != nil {
+			return nil, err
+		}
+		return mcp.NewToolResultText(strings.Join(ports, "\n")), nil
 	}
 }

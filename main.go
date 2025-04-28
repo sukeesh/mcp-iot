@@ -25,10 +25,14 @@ func mcpMain() {
 
 	i := internal.NewIotMcpServer()
 
-	temperatureModule := mcp.NewTool("get_temperature",
-		mcp.WithDescription("Read temperature from Temperature sensor module"),
+	readSerialLineModule := mcp.NewTool("read_serial_line",
+		mcp.WithDescription("Read a single line of data from any serial port (port and baud configurable)"),
 	)
-	s.AddTool(temperatureModule, i.FetchTemperature())
+	s.AddTool(readSerialLineModule, i.ReadSerialLine())
+
+	portsListModule := mcp.NewTool("port_list",
+		mcp.WithDescription("List all the ports available"))
+	s.AddTool(portsListModule, i.GetPortList())
 
 	if err := server.ServeStdio(s); err != nil {
 		log.Fatalf("Server error: %v", err)
