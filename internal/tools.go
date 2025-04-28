@@ -21,10 +21,11 @@ func NewIotMcpServer() *IotMcpServer {
 
 func (i *IotMcpServer) ReadSerialLine() server.ToolHandlerFunc {
 	return func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		portName := request.Params.Arguments["portName"].(string)
 		mode := &serial.Mode{
 			BaudRate: 9600,
 		}
-		port, err := serial.Open("/dev/cu.usbmodem12401", mode)
+		port, err := serial.Open(portName, mode)
 		if err != nil {
 			return nil, err
 		}

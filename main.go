@@ -27,6 +27,10 @@ func mcpMain() {
 
 	readSerialLineModule := mcp.NewTool("read_serial_line",
 		mcp.WithDescription("Read a single line of data from any serial port (port and baud configurable)"),
+		mcp.WithString("portName",
+			mcp.Required(),
+			mcp.Description("The name of the port to read the serial line from. Example: /dev/cu.usbmodem12401"),
+		),
 	)
 	s.AddTool(readSerialLineModule, i.ReadSerialLine())
 
