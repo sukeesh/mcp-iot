@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"context"
 	"fmt"
-	"log"
+	"os"
 	"strings"
 	"time"
 
@@ -37,7 +37,7 @@ func (i *IotMcpServer) ReadSerialLine() server.ToolHandlerFunc {
 		reader := bufio.NewReader(port)
 		line, err := reader.ReadString('\n')
 		if err != nil {
-			log.Println("Error reading from serial port:", err)
+			fmt.Fprintf(os.Stderr, "Error reading from serial port: %v\n", err)
 		}
 
 		line = strings.TrimSpace(line)
@@ -57,9 +57,13 @@ func (i *IotMcpServer) GetPortList() server.ToolHandlerFunc {
 
 func (i *IotMcpServer) WriteDigital() server.ToolHandlerFunc {
 	return func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+		fmt.Fprintf(os.Stderr, "CALLING WRITE DIGITAL...\n")
+
 		portName := request.Params.Arguments["portName"].(string)
 		pin := int(request.Params.Arguments["pin"].(float64))
 		value := request.Params.Arguments["value"].(string)
+
+		fmt.Fprintf(os.Stderr, "Values are : %s %d %s\n", portName, pin, value)
 
 		mode := &serial.Mode{
 			BaudRate: 9600,
@@ -71,32 +75,36 @@ func (i *IotMcpServer) WriteDigital() server.ToolHandlerFunc {
 		defer port.Close()
 		time.Sleep(2 * time.Second)
 
-		pinMode := fmt.Sprintf("M,6,OUTPUT\n")
+		pinMode := fmt.Sprintf("M,%d,OUTPUT\n", pin)
+		fmt.Fprintf(os.Stderr, "PIN MODE IS BEING SET to %s", pinMode)
 		_, err = port.Write([]byte(pinMode))
 		if err != nil {
-			log.Fatal(err)
+			fmt.Fprintf(os.Stderr, "Error writing pin mode: %v\n", err)
+			return nil, err
 		}
 
 		time.Sleep(500 * time.Millisecond)
 
 		for i := 0; i < 5; i++ {
 			// Turn LED ON
-			log.Println("Setting pin 6 HIGH")
-			commandOn := fmt.Sprintf("D,6,HIGH\n")
+			commandOn := fmt.Sprintf("D,%d,HIGH\n", pin)
+			fmt.Fprintf(os.Stderr, "COMMAND IS BEING SET TO %s", commandOn)
 			_, err = port.Write([]byte(commandOn))
 			if err != nil {
-				log.Fatal(err)
+				fmt.Fprintf(os.Stderr, "Error writing HIGH command: %v\n", err)
+				return nil, err
 			}
 
 			// Wait 1 second
 			time.Sleep(1 * time.Second)
 
 			// Turn LED OFF
-			log.Println("Setting pin 6 LOW")
-			commandOff := fmt.Sprintf("D,6,LOW\n")
+			commandOff := fmt.Sprintf("D,%d,LOW\n", pin)
+			fmt.Fprintf(os.Stderr, "COMMAND IS BEING SET TO %s", commandOff)
 			_, err = port.Write([]byte(commandOff))
 			if err != nil {
-				log.Fatal(err)
+				fmt.Fprintf(os.Stderr, "Error writing LOW command: %v\n", err)
+				return nil, err
 			}
 
 			// Wait 1 second

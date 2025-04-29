@@ -47,7 +47,7 @@ func mcpMain() {
 		),
 		mcp.WithNumber("pin",
 			mcp.Required(),
-			mcp.Description("The pin to write the digital value to. Example: 1"),
+			mcp.Description("The pin to write the digital value to. Example: 1, 7, 6"),
 		),
 		mcp.WithString("value",
 			mcp.Required(),
