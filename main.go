@@ -1,11 +1,12 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
 	"github.com/sukeesh/mcp-iot-go/internal"
-	"log"
-	"os"
 )
 
 func setEnvs() {
@@ -37,6 +38,23 @@ func mcpMain() {
 	portsListModule := mcp.NewTool("port_list",
 		mcp.WithDescription("List all the ports available"))
 	s.AddTool(portsListModule, i.GetPortList())
+
+	writeDigitalModule := mcp.NewTool("write_digital",
+		mcp.WithDescription("Write a digital value to a pin on a port. Example: /dev/cu.usbmodem12401,1,HIGH"),
+		mcp.WithString("portName",
+			mcp.Required(),
+			mcp.Description("The name of the port to write the digital value to. Example: /dev/cu.usbmodem12401"),
+		),
+		mcp.WithNumber("pin",
+			mcp.Required(),
+			mcp.Description("The pin to write the digital value to. Example: 1"),
+		),
+		mcp.WithString("value",
+			mcp.Required(),
+			mcp.Description("The value to write to the pin. Example: HIGH"),
+		),
+	)
+	s.AddTool(writeDigitalModule, i.WriteDigital())
 
 	if err := server.ServeStdio(s); err != nil {
 		log.Fatalf("Server error: %v", err)
