@@ -81,7 +81,7 @@ func (i *IotMcpServer) WriteDigital() server.ToolHandlerFunc {
 
 		time.Sleep(500 * time.Millisecond)
 
-		for i := 0; i < 5; i++ {
+		for i := 0; i < 1; i++ {
 			// Turn LED ON
 			commandOn := fmt.Sprintf("D,%d,HIGH\n", pin)
 			fmt.Fprintf(os.Stderr, "Command is being set to %s", commandOn)
@@ -92,7 +92,7 @@ func (i *IotMcpServer) WriteDigital() server.ToolHandlerFunc {
 			}
 
 			// Wait 1 second
-			time.Sleep(1 * time.Second)
+			time.Sleep(time.Second)
 
 			// Turn LED OFF
 			commandOff := fmt.Sprintf("D,%d,LOW\n", pin)
@@ -102,9 +102,6 @@ func (i *IotMcpServer) WriteDigital() server.ToolHandlerFunc {
 				fmt.Fprintf(os.Stderr, "Error writing LOW command: %v\n", err)
 				return nil, err
 			}
-
-			// Wait 1 second
-			time.Sleep(1 * time.Second)
 		}
 
 		return mcp.NewToolResultText(fmt.Sprintf("Set pin %d to %s", pin, value)), nil

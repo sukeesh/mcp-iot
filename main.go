@@ -40,14 +40,15 @@ func mcpMain() {
 	s.AddTool(portsListModule, i.GetPortList())
 
 	writeDigitalModule := mcp.NewTool("write_digital",
-		mcp.WithDescription("Write a digital value to a pin on a port. Example: /dev/cu.usbmodem12401,1,HIGH"),
+		mcp.WithDescription("Write a digital value to a pin on a port. Example: /dev/cu.usbmodem12401,1,HIGH"+
+			"Example: D,6,HIGH to turn on the red LED, D,7,HIGH to turn on the green LED. Use D,<pin>,LOW to turn off the respective LED"),
 		mcp.WithString("portName",
 			mcp.Required(),
 			mcp.Description("The name of the port to write the digital value to. Example: /dev/cu.usbmodem12401"),
 		),
 		mcp.WithNumber("pin",
 			mcp.Required(),
-			mcp.Description("The pin to write the digital value to. Example: 1, 7, 6"),
+			mcp.Description("The pin to write the digital value to. Example: 7, 6. 6 is for Red light, 7 is for Green light"),
 		),
 		mcp.WithString("value",
 			mcp.Required(),

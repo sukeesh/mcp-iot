@@ -5,7 +5,6 @@
  * Commands:
  * M,pin,mode - Sets the pin mode (M,6,OUTPUT)
  * D,pin,value - Sets the digital pin value (D,6,HIGH or D,6,LOW)
- * AB,pin,value - Sets analog value (PWM) for pin (AB,9,128)
  * BZ,pin,state - Controls a buzzer (BZ,8,ON or BZ,8,OFF)
  */
 
