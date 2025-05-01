@@ -4,6 +4,11 @@
   <strong>Model Completion Protocol (MCP) Server for IoT Devices (Arduino)</strong>
 </p>
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6df57c3b-2df6-4adb-93dc-4531f6fb2460" alt="IOT MCP Logo" width="240" />
+</p>
+
+
 [![Go](https://github.com/sukeesh/mcp-iot-go/workflows/Go/badge.svg)](https://github.com/sukeesh/mcp-iot-go/actions)
 
 ## Overview
@@ -15,6 +20,11 @@ MCP for IOT is a Go implementation of the [Model Completion Protocol](https://mo
 - 🚦 Control digital pins (LEDs, relays, etc.)
 - 🔊 Control buzzers with on/off and duration settings
 - 🤖 Seamless integration with Claude AI
+
+##  Usage
+
+https://github.com/user-attachments/assets/46d7d731-f5d0-4acd-b53e-c00be8b83215
+
 
 ## Prerequisites
 - [Go](https://go.dev/doc/install) (version 1.24 or later)
