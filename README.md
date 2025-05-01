@@ -1,7 +1,7 @@
 # MCP for IOT
 
 <p align="center">
-  <strong>Model Completion Protocol (MCP) Server for IoT Devices (Arduino)</strong>
+  <strong>Model Context Protocol (MCP) Server for IoT Devices (Arduino)</strong>
 </p>
 
 <p align="center">
@@ -12,7 +12,7 @@
 [![Go](https://github.com/sukeesh/mcp-iot-go/workflows/Go/badge.svg)](https://github.com/sukeesh/mcp-iot-go/actions)
 
 ## Overview
-MCP for IOT is a Go implementation of the [Model Completion Protocol](https://modelcontextprotocol.io/introduction) (MCP) server that allows AI models like Claude to directly interact with IoT devices, specifically Arduino boards. This server acts as a bridge between Claude and your Arduino hardware, enabling AI-controlled hardware automation.
+MCP for IOT is a Go implementation of the [Model Context Protocol](https://modelcontextprotocol.io/introduction) (MCP) server that allows AI models like Claude to directly interact with IoT devices, specifically Arduino boards. This server acts as a bridge between Claude and your Arduino hardware, enabling AI-controlled hardware automation.
 
 ## Features
 - 🔌 List available serial ports
