@@ -56,6 +56,26 @@ func mcpMain() {
 	)
 	s.AddTool(writeDigitalModule, i.WriteDigital())
 
+	buzzerControlModule := mcp.NewTool("buzzer_control",
+		mcp.WithDescription("Control a buzzer connected to an Arduino pin"),
+		mcp.WithString("portName",
+			mcp.Required(),
+			mcp.Description("The name of the port to control the buzzer on. Example: /dev/cu.usbmodem12401"),
+		),
+		mcp.WithNumber("pin",
+			mcp.Required(),
+			mcp.Description("The pin number where the buzzer is connected. Example: 8"),
+		),
+		mcp.WithString("state",
+			mcp.Required(),
+			mcp.Description("The state to set the buzzer to. Either 'ON' or 'OFF'"),
+		),
+		mcp.WithNumber("duration",
+			mcp.Description("Duration in milliseconds to keep the buzzer on (if state is 'ON'). Set to 0 for no auto-off."),
+		),
+	)
+	s.AddTool(buzzerControlModule, i.BuzzerControl())
+
 	if err := server.ServeStdio(s); err != nil {
 		log.Fatalf("Server error: %v", err)
 	}

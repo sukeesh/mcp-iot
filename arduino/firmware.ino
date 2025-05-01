@@ -5,6 +5,8 @@
  * Commands:
  * M,pin,mode - Sets the pin mode (M,6,OUTPUT)
  * D,pin,value - Sets the digital pin value (D,6,HIGH or D,6,LOW)
+ * AB,pin,value - Sets analog value (PWM) for pin (AB,9,128)
+ * BZ,pin,state - Controls a buzzer (BZ,8,ON or BZ,8,OFF)
  */
 
 void setup() {
@@ -67,7 +69,23 @@ void processCommand(String command) {
     } else {
       Serial.println("Invalid value. Expected: HIGH or LOW");
     }
+  } else if (cmdType.equals("BZ")) {
+    // Buzzer command
+    if (value.equals("ON")) {
+      pinMode(pin, OUTPUT);
+      digitalWrite(pin, HIGH);
+      Serial.print("Buzzer on pin ");
+      Serial.print(pin);
+      Serial.println(" turned ON");
+    } else if (value.equals("OFF")) {
+      digitalWrite(pin, LOW);
+      Serial.print("Buzzer on pin ");
+      Serial.print(pin);
+      Serial.println(" turned OFF");
+    } else {
+      Serial.println("Invalid buzzer state. Expected: ON or OFF");
+    }
   } else {
-    Serial.println("Invalid command type. Expected: M (mode) or D (digital)");
+    Serial.println("Invalid command type. Expected: M (mode), D (digital), AB (analog), or BZ (buzzer)");
   }
 } 

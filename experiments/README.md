@@ -1,0 +1,1 @@
+This folder hosts all the test scripts and experiments related to MCP IOT Go repository.

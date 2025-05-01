@@ -1,2 +1,2 @@
 # MCP for IOT
-MCP Server for IOT Devices
+MCP Server for IOT Devices (Arduino)
